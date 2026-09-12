@@ -70,20 +70,40 @@ export interface ResumenFinanciero {
  * Todos los valores numéricos deben retornar redondeados a 2 decimales: Number(val.toFixed(2)).
  */
 export function calcularTotalesPedido(pedido: PedidoMovil): ResumenFinanciero {
-  // 👇 TODO: Escribe tu lógica de cálculo aquí y reemplaza el objeto por defecto:
+let Rsubtotal = 0;
+  
+  pedido.detalles.forEach((detalle) => {
+    Rsubtotal += detalle.producto.precioUnitario * detalle.cantidad;
+  });
+  Rsubtotal = Number(Rsubtotal.toFixed(2));
+
+  let Rdescuentoestudiantil = 0;
+  if (Rsubtotal >= 10.00) {
+    Rdescuentoestudiantil = Number((Rsubtotal * 0.10).toFixed(2));
+  } else {
+    Rdescuentoestudiantil = 0;
+  }
+
+  let Rbaseimponible = Number((Rsubtotal - Rdescuentoestudiantil).toFixed(2));
+
+  let Riva15 = Number((Rbaseimponible * 0.15).toFixed(2));
+
+  let Rtotalpagar = Number((Rbaseimponible + Riva15).toFixed(2));
   return {
-    subtotal: 0,
-    descuentoEstudiantil: 0,
-    iva15: 0,
-    totalPagar: 0
+    subtotal: Rsubtotal,
+    descuentoEstudiantil: Rdescuentoestudiantil,
+    iva15: Riva15,
+    totalPagar: Rtotalpagar
   };
 }
 
 /**
  * Función visual para imprimir el ticket en consola
  */
+declare var console: any;
 export function imprimirTicketDigital(pedido: PedidoMovil): void {
   const totales = calcularTotalesPedido(pedido);
+  
 
   console.log("╔══════════════════════════════════════════════════════════════╗");
   console.log("║           📱 BAR SALESIANO UETS - RECIBO DIGITAL             ║");
