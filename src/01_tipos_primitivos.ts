@@ -20,73 +20,54 @@
 // ============================================================================
 // PASO 1: Tipado de Variables Personales e Impresión de Resumen
 // ============================================================================
-// TODO: Asigna valores válidos a las variables con sus tipos explícitos requeridos:
-// - `nombreEstudiante` (string): Debe tener al menos 1 caracter.
-// - `edadEstudiante` (number): Debe ser un número mayor a 0.
-// - `promedioObjetivo` (number): Debe ser un número decimal (ej. 9.85).
-// - `estaMatriculado` (boolean): Debe ser true.
 
-export const nombreEstudiante: string = "Gabriel";       
+export const nombreEstudiante: string = "Gabriel Calle";       
 export const edadEstudiante: number = 17;          
-export const promedioObjetivo: number = 9.8;       
-export let estaMatriculado: boolean = true;   
+export const promedioObjetivo: number = 8;        
+export let estaMatriculado: boolean = true;    
 
-/**
- * TODO: Implementa la función `obtenerResumenPersonal` usando Template Strings (${...}).
- * Debe retornar una cadena con este formato exacto:
- * `👤 Estudiante: NOMBRE | 🎂 Edad: EDAD años | 🎯 Meta: PROMEDIO/10 | 📋 Estado: MATRICULADO` (o NO_MATRICULADO si es false)
- */
+
 export function obtenerResumenPersonal(): string {
-  let formato: string = `👤 Estudiante: ${nombreEstudiante} | 🎂 Edad: ${edadEstudiante} años | 🎯 Meta: ${promedioObjetivo}/10 | 📋 Estado: ${estaMatriculado}`
+  let estadoTexto = estaMatriculado ? "MATRICULADO" : "NO_MATRICULADO";
+  
+  let formato = `👤 Estudiante: ${nombreEstudiante} | 🎂 Edad: ${edadEstudiante} años | 🎯 Meta: ${promedioObjetivo}/10 | 📋 Estado: ${estadoTexto}`;
+  
   return formato;
 }
 
 // ============================================================================
 // PASO 2: Función para Calcular el Promedio
 // ============================================================================
-/**
- * TODO: Implementa la función `calcularPromedio`.
- * Debe:
- * 1. Recibir `notas`: un arreglo inmutable de números (`readonly number[]`).
- * 2. Si el arreglo está vacío, retornar `0`.
- * 3. Sumar todas las notas y dividir para la cantidad de elementos (`notas.length`).
- * 4. Retornar el resultado como número redondeado a 2 decimales.
- *    (Pista: usa Number((suma / notas.length).toFixed(2)))
- */
-export function calcularPromedio(notas: readonly number[]): number {
-  if (notas.length == 0){
-  return 0;
-}
 
-let suma = 0;
-  for (const nota of notas) {
-    suma = suma + nota;
+export function calcularPromedio(notas: readonly number[]): number {
+  // Validación de arreglo vacío utilizando operador de igualdad estándar
+  if (notas.length == 0) {
+    return 0;
   }
 
-return Number((suma / notas.length).toFixed(2));
+  let suma = 0;
+  
+  // Recorrido seguro del arreglo inmutable
+  for (const nota of notas) {
+    suma += nota;
+  }
 
+  let promedio = suma / notas.length;
+  let resultadoRedondeado = Number(promedio.toFixed(2));
+
+  return resultadoRedondeado;
 }
-
 // ============================================================================
 // PASO 3: Formateador de Ficha Técnica
 // ============================================================================
-/**
- * TODO: Implementa la función `formatearFichaEstudiante`.
- * Parámetros requeridos:
- *  - nombre (string)
- *  - edad (number)
- *  - paralelo ("E1" | "E2") -> Literal Type
- *  - activo (boolean)
- * 
- * Formato de salida requerido:
- *  `[FICHA UETS] NOMBRE_EN_MAYUSCULAS (XX años) - Paralelo: E1 - Estado: MATRICULADO` (o RETIRADO si activo es false)
- */
 export function formatearFichaEstudiante(
   nombre: string,
   edad: number,
   paralelo: "E1" | "E2",
   activo: boolean
 ): string {
-  const estadoTexto = activo ? "MATRICULADO" : "RETIRADO";
-  return `[FICHA UETS] ${nombre.toUpperCase()} (${edad} años) - Paralelo: ${paralelo} - Estado: ${estadoTexto}`;
+  let nombreMayusculas = nombre.toUpperCase();
+  let estadoTexto = activo ? "MATRICULADO" : "RETIRADO";
+  let formato = `[FICHA UETS] ${nombreMayusculas} (${edad} años) - Paralelo: ${paralelo} - Estado: ${estadoTexto}`;
+  return formato;
 }
