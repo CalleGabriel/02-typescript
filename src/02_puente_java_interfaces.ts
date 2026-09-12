@@ -53,10 +53,10 @@ export interface PerfilUsuario {
   rol: "ADMIN" | "DOCENTE" | "ESTUDIANTE";
 }
 
-
+// TODO: Completa la variable constante `usuarioEjemplo` asignando valores válidos:
 export const usuarioEjemplo: PerfilUsuario = {
   id: "UETS-2026-001",
-  nombreCompleto: "Gabriel Eduardo Calle Barros",     
+  nombreCompleto: "Gabriel Eduardo Calle Barros",                            
   correo: "gabriel.calleb.est@uets.edu.ec",       
   rol: "ESTUDIANTE"
 };
@@ -68,7 +68,7 @@ export const usuarioEjemplo: PerfilUsuario = {
  * (Ejemplo: `[PERFIL] UETS-2026-001 (ESTUDIANTE): Carlos Andrade - carlos@est.salesianos.edu.ec`)
  */
 export function formatearPerfilUsuario(usuario: PerfilUsuario): string {
- let formato: string = `[PERFIL] ${usuario.id} (${usuario.rol}): ${usuario.nombreCompleto} - ${usuario.correo}`;
+  let formato=`[PERFIL] ${usuario.id} (${usuario.rol}): ${usuario.nombreCompleto} - ${usuario.correo}`;
   return formato;
 }
 
@@ -104,12 +104,14 @@ export function calcularPrecioFinal(producto: ProductoItem): number {
   if (!producto.disponible) {
     return 0;
   }
-  
+  let precioFinal = producto.precio;
+
   if (producto.descuentoPorcentaje && producto.descuentoPorcentaje > 0) {
-    let descuento: number = producto.precio * (producto.descuentoPorcentaje / 100);
-    let precioFinal: number = producto.precio - descuento;
-    return Number(precioFinal.toFixed(2));
+    let descuento = producto.precio * (producto.descuentoPorcentaje / 100);
+    precioFinal = producto.precio - descuento;
   }
+  let resultadoRedondeado = Number(precioFinal.toFixed(2));
   
-  return Number(producto.precio.toFixed(2));
+  return resultadoRedondeado;
 }
+
